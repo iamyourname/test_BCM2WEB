@@ -2,7 +2,7 @@
   <artifact type="war" name="web archive">
     <output-path>$PROJECT_DIR$/out/artifacts/web_archive</output-path>
     <root id="archive" name="web archive.war">
-      <element id="artifact" artifact-name="unnamed" />
+      <element id="artifact" artifact-name="web" />
     </root>
   </artifact>
 </component>
