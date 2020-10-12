@@ -27,9 +27,9 @@ public class FindLikeGod {
 
         try {
             System.out.println("FindLikeGod");
-           Object[][] out31Data = viewResult.ViewBuffGodOutFromBD(GodBuf,GodSAP, agent);
-           Object[][] out31Data2 = viewResult.ViewTasksFromBD(GodBuf,GodSAP, agent);
-            Object[][] out31Data3 = viewResult.ViewUTMFromBD(GodBuf,GodSAP, agent);
+           Object[][] out31Data = viewResult.ViewBuffGodOutFromBD(GodBuf,GodSAP, agent); // ошибка
+           Object[][] out31Data2 = viewResult.ViewTasksFromBD(GodBuf,GodSAP, agent); // таски
+            Object[][] out31Data3 = viewResult.ViewUTMFromBD(GodBuf,GodSAP, agent); // утмдокс
 
             for (Object[] out31Datum : out31Data) {
                 GodResponse += Arrays.toString(out31Datum);
