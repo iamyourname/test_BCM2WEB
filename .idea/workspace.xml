@@ -3,7 +3,6 @@
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
       <artifact name="web" />
-      <artifact name="web archive" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
@@ -29,10 +28,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="00eff4a6-408d-42a4-b921-af3f5db1dedc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/web_archive.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/web.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/web/WEB-INF/classes/app/model/ViewResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/web/WEB-INF/classes/app/model/ViewResult.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/web_archive/web archive.war" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/web_archive/web archive.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/model/ViewResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/model/ViewResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/app/model/ViewResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/app/model/ViewResult.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +41,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="WARN_ABOUT_CRLF" value="false" />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
@@ -60,10 +61,26 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.4" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.tools" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -74,6 +91,7 @@
       <option name="presentableId" value="Default" />
       <updated>1602525732358</updated>
       <workItem from="1602525733552" duration="4757000" />
+      <workItem from="1602534328152" duration="10903000" />
     </task>
     <task id="LOCAL-00001" summary="idea">
       <created>1602527226916</created>
@@ -89,7 +107,14 @@
       <option name="project" value="LOCAL" />
       <updated>1602527283808</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="comm">
+      <created>1602534469784</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1602534469784</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -105,24 +130,34 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="idea" />
     <MESSAGE value="test_in_idea" />
-    <option name="LAST_COMMIT_MESSAGE" value="test_in_idea" />
+    <MESSAGE value="comm" />
+    <option name="LAST_COMMIT_MESSAGE" value="comm" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="307" y="53" key="CommitChangelistDialog2" timestamp="1602527283596">
+    <state x="621" y="369" key="#Notifications" timestamp="1602534520207">
       <screen x="0" y="23" width="1792" height="1031" />
     </state>
-    <state x="307" y="53" key="CommitChangelistDialog2/1792.63.1920.1057/0.23.1792.1031@0.23.1792.1031" timestamp="1602527283596" />
-    <state x="145" y="248" width="1488" height="722" key="SettingsEditor" timestamp="1602533012186">
+    <state x="621" y="369" key="#Notifications/1792.63.1920.1057/0.23.1792.1031@0.23.1792.1031" timestamp="1602534520207" />
+    <state x="360" y="200" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1602545938786">
       <screen x="0" y="23" width="1792" height="1031" />
     </state>
-    <state x="145" y="248" width="1488" height="722" key="SettingsEditor/1792.63.1920.1057/0.23.1792.1031@0.23.1792.1031" timestamp="1602533012186" />
-    <state x="496" y="278" key="Vcs.Push.Dialog.v2" timestamp="1602527535550">
+    <state x="360" y="200" key="#com.intellij.execution.impl.EditConfigurationsDialog/1792.63.1920.1057/0.23.1792.1031@0.23.1792.1031" timestamp="1602545938786" />
+    <state x="307" y="53" key="CommitChangelistDialog2" timestamp="1602534468697">
       <screen x="0" y="23" width="1792" height="1031" />
     </state>
-    <state x="496" y="278" key="Vcs.Push.Dialog.v2/1792.63.1920.1057/0.23.1792.1031@0.23.1792.1031" timestamp="1602527535550" />
+    <state x="307" y="53" key="CommitChangelistDialog2/1792.63.1920.1057/0.23.1792.1031@0.23.1792.1031" timestamp="1602534468697" />
+    <state x="145" y="248" width="1488" height="722" key="SettingsEditor" timestamp="1602534584244">
+      <screen x="0" y="23" width="1792" height="1031" />
+    </state>
+    <state x="145" y="248" width="1488" height="722" key="SettingsEditor/1792.63.1920.1057/0.23.1792.1031@0.23.1792.1031" timestamp="1602534584244" />
+    <state x="496" y="278" key="Vcs.Push.Dialog.v2" timestamp="1602534475368">
+      <screen x="0" y="23" width="1792" height="1031" />
+    </state>
+    <state x="496" y="278" key="Vcs.Push.Dialog.v2/1792.63.1920.1057/0.23.1792.1031@0.23.1792.1031" timestamp="1602534475368" />
   </component>
 </project>

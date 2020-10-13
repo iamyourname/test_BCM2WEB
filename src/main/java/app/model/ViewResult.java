@@ -55,7 +55,7 @@ public class ViewResult {
         rsPullB.last();
         int countrows = rsPullB.getRow();
         Object[] colNames = new String[siz];
-        Object[][] data = new Object[countrows][siz];
+        Object[][] data = new Object[countrows][siz+1];
         if(countrows == 0){data[0][0]="empty";return data;} // если не отгрузка
         rsPullB.beforeFirst();
 
@@ -74,9 +74,94 @@ public class ViewResult {
             }
             id++;
         }
+        if(data[0][6].toString().contains("необеспеченный")){
+            String posFix = data[0][6].toString().replace("  имеют необеспеченный расход.","");
+            String[] posFixList = posFix.split("позиции ");
+            //System.out.println(posFixList[1]);
+            data[0][7]=ViewFixOfNeob(godbuff,godSAP,godagent,posFixList[1]);
+        }
         pullConn.close();
         return data;
     }
+
+    public String ViewFixOfNeob(String godbuff, String godSAP, String godagent, String pos) throws SQLException {
+
+
+        String result="";
+        String sqlstring = "select \n" +
+                "  bo.bout_transactionid \n" +
+                " , ef.efb_f2regid \n" +
+                " , ewp.ewbp_party \n" +
+                " , ewp.ewbp_quantity \n" +
+                " , bs.bste_quantity \n" +
+                "from e_waybill_positions ewp \n" +
+                "left join b_outgoing bo on bo.ewbh_id = ewp.ewbh_id \n" +
+                "left join c_org_divisions co on co.codv_id = ewp.codv_id \n" +
+                "left join e_fb ef on ef.efb_id = ewp.ewbp_outgoing_efb_id \n" +
+                "left join b_stockentry bs on bs.efb_id = ewp.ewbp_outgoing_efb_id "+
+                "where 1=1 \n" +
+                "and bo.doc_adddate > sysdate -10 " +
+                "and bo.bout_transactionid = '" + godbuff + "'\n" +
+                "and co.codv_code = '" + godSAP + "'\n" +
+                "and ewp.ewbp_identity = '" + pos + "'\n"
+                ;
+
+        System.out.println(sqlstring);
+        Connection pullConn = ConnectionPool.getInstance().getConnection(godagent);
+        Statement stmtPullB = pullConn.createStatement(
+                ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        ResultSet rsPullB = stmtPullB.executeQuery(sqlstring);
+        ConnectionPool.getInstance().getConnection(godagent).close();
+        //System.out.println("Find");
+        ResultSetMetaData rsdata = rsPullB.getMetaData();
+        int siz = rsdata.getColumnCount();
+        rsPullB.last();
+        int countrows = rsPullB.getRow();
+        Object[] colNames = new String[siz];
+        Object[][] data = new Object[countrows][siz];
+        //if(countrows == 0){data[0][0]="empty";return data;} // если не отгрузка
+        rsPullB.beforeFirst();
+
+        /*
+Добрый день!
+В буфере 2945788 имеется необеспеченный расход по справке FB-000002642000696 для PLU 3696357.
+Отгружаете 20 шт, доступно для отгрузки 3 шт.
+Просьба запросить у ГУТЗ корректные остатки и отгружать согласно количеству продукции на вашем РЦ.
+Вы также можете отгрузить изъяв данную продукцию из отгрузки.
+*/
+
+
+
+        for (int i=0; i<siz; i++) {
+            colNames[i] = rsdata.getColumnName(i+1);
+
+        }
+
+        StringBuilder startMes = new StringBuilder("Добрый день!\n" +
+                "В буфере " + godbuff + " имеется необеспеченный расход.\n");
+
+        //System.out.println(startMes);
+
+        int id=0;
+        while (rsPullB.next()){
+
+            startMes.append("По справке ")
+                    .append(rsPullB.getString((String) colNames[1]))
+                    .append(" для PLU ")
+                    .append(rsPullB.getString((String) colNames[2]))
+                    .append(". В документе содержится ")
+                    .append(rsPullB.getString((String) colNames[3]))
+                    .append("шт. данной АП, но доступно для отгрузки: ")
+                    .append(rsPullB.getString((String) colNames[4]))
+                    .append(" шт. \n");
+        }
+        startMes.append("Просьба запросить у ГУТЗ корректные остатки и отгружать согласно количеству продукции на вашем РЦ.\n" + "Вы также можете отгрузить изъяв данную продукцию из отгрузки.");
+        pullConn.close();
+        System.out.println("mes" + startMes.toString());
+        return startMes.toString();
+    }
+
+
 
     public Object[][] ViewTasksFromBD(String godbuff, String godSAP, String godagent) throws SQLException {
 
