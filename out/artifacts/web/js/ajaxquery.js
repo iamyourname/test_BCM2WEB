@@ -29,6 +29,240 @@ function showChnage() {
 
 }
 
+function godBacchus(){
+    var Godbuff = document.getElementById('Godbuff').value.replace(/\s/g, '');
+    var GodSAP = document.getElementById('GodSAP').value.replace(/\s/g, '');
+
+    var GodOutput = document.getElementById('GodOutput');
+
+    GodOutput.innerHTML = "";
+
+
+    var GodTextArea = document.getElementById('GodTextArea');
+
+    GodTextArea.innerHTML = "";
+
+    var errorOfGod = "";
+
+
+    let xhrB = new XMLHttpRequest();
+
+    xhrB.onreadystatechange = function() {
+        if (xhrB.readyState !== 4) return;
+        if (xhrB.status == 200) {
+
+            //----cp
+            var respText = xhrB.responseText;
+            var listBuff = respText.split("]&&[");
+            var printTableInfo2 ="";
+            var printTask = "<table class=\"w3-table-all w3-card-4 w3-border w3-hoverable w3-small\">" +
+                "<tr class = \"w3-light-blue\">\n" +
+                "<th>C_ID</th>"+
+                "<th>C_CREATED</th>"+
+                "<th>C_DATE_DONE</th>"+
+                "<th>C_PROCESSING</th>"+
+                "<th>C_TASK_STATUS</th>"+
+                "<th>C_APPLICATION_STATUS</th>"+
+                "<th>C_TASK_TYPE</th>"+
+                "<th>C_ERROR_DETAILS</th>"+
+                "<th>C_TRACE_ID</th>"+
+                "<th>C_MERCURY_QUEUE</th>"+
+                "<th>C_ATTEMPTS</th>"+
+                "<th>C_VERSION</th>"+
+                "<th>C_NUMBER_IN_SEQ</th>"+
+                "<th>C_HOSTNAME</th>"+
+                "<th>C_STARTED</th>"+
+                "<th>C_STATUS_CODE</th>"+
+                "<th>C_STATUS_MSG</th>"+
+                "<th>C_REQ_USER_DATA</th>"+
+                "<th>C_PARENT</th>"+
+                "<th>C_TASK_SDSS</th>"+
+                "<th>C_PRIORITY</th>"+
+                "<th>C_DOC_SDTB_ID</th>"+
+                "<th>C_ERROR_CODE</th>"+
+                "<th>C_USER</th>"+
+                "<th>C_TASK_DATA</th>"+
+                "<th>CODV_ID</th>"+
+                "<th>C_PLANNED</th>"+
+                "<th>C_RESTARTED_FROM_ID</th>"+
+                "<th>C_APPLICATION_ID</th>"+
+                "<th>C_DOC_ID</th>"+
+                "<th>ROW_CHG_NUM</th>"+
+                "<th>C_GIT_HASH</th>"+
+                "<th>C_GRADLE_BUILD_DATE</th>"+
+                "<th>C_RESTART_ATTEMPTS</th>"+
+                "<th>C_HOST_STARTDATE</th>"+
+                "<th>C_ORPHANED</th>"+
+                "<th>C_SOURCE</th>"+
+                "<th>C_TASK_GROUP</th>"
+            "</tr>";
+            var printUtm = "<table class=\"w3-table-all w3-card-4 w3-border w3-hoverable w3-small\">" +
+                "<tr class = \"w3-light-blue\">\n" +
+                "<th>BUD_ID</th>"+
+                "<th>CODV_ID</th>"+
+                "<th>BUD_URL</th>"+
+                "<th>DOC_ADDDATE</th>"+
+                "<th>DOC_MODDATE</th>"+
+                "<th>DOC_MODUSER</th>"+
+                "<th>DOC_STATUS</th>"+
+                "<th>ROW_CHG_NUM</th>"+
+                "<th>BUD_BODY</th>"+
+                "<th>BUD_REPLY_ID</th>"+
+                "<th>BUD_DIRECTION</th>"+
+                "<th>BUD_REG_ID</th>"+
+                "<th>BUD_INNER_REPLY_ID</th>"+
+                "<th>BUD_UTM_REPLY_ID</th>"+
+                "<th>BUD_OUT_ID</th>"
+            "</tr>";
+            var printTable = "<table class=\"w3-table-all w3-card-4 w3-border \">" +
+                "                <tr class = 'w3-light-blue'>\n" +
+                "                   <th>Номер Буфера</th>"+
+                "                   <th>Статус Буфера</th>"+
+                "                   <th>Дата ТТН</th>"+
+                "                   <th>Номер АП</th>"+
+                "                   <th>ТТН ЕГАИС</th>"+
+                "                   <th>Статус ТТН ЕГАИС в БАХУС</th>"+
+                "                </tr>";
+            for(var l=0;l <listBuff.length-2;l++){
+                if(listBuff[l] !=''){
+                    var tableBuf = listBuff[l].split(']');
+                    var TableBufArr = tableBuf[0].replace('[','');
+                    var TableBufParsed = TableBufArr.split(',');
+                    printTable += "<tr><td>" + TableBufParsed[0] + "</td>" +
+                        "<td>" + TableBufParsed[1] + "</td>" +
+                        "<td>" + TableBufParsed[2] + "</td>" +
+                        "<td>" + TableBufParsed[3] + "</td>" +
+                        "<td>" + TableBufParsed[4] + "</td>" +
+                        "<td>" + TableBufParsed[5] + "</td>" +
+                        "</tr>";
+                    errorOfGod = TableBufParsed[6];
+
+                }
+            }
+
+            var Rowtasks = listBuff[1].split('][');
+            for(var ii=0; ii < Rowtasks.length; ii++){
+                //var bCdata = Rowtasks.split
+                var tasks = Rowtasks[ii].split('$$,');
+                printTask += "<tr>";
+                for(var x=0; x < tasks.length; x++){
+                    if(tasks[x].length > 80){
+                        printTask += "<td onclick=\"document.getElementById('id"+ii+"').style.display='block'\">" + tasks[x].substr(0,80) +
+                            //"<span style=\"display:none\" id=\"fullvalueTask"+x+"\">" + tasks[x] + "</span>"+
+                            "...</td>";
+                        printTask += "  <div id='id"+ii + "' class=\"w3-modal\" style = \"z-index: 999\">\n" +
+                            "    <div class=\"w3-modal-content\">\n" +
+                            "      <div class=\"w3-container\">\n" +
+                            "        <span onclick=\"document.getElementById('id"+ii+"').style.display='none'\" class=\"w3-button w3-display-topright\">&times;</span>\n" +
+                            "        <p>"+tasks[x]+"</p>\n" +
+                            "      </div>\n" +
+                            "    </div>\n" +
+                            "  </div>";
+                    }else{
+                        printTask += "<td>" + tasks[x].replace('$$','') +"</td>";
+                    }
+
+                }
+                printTask += "</tr>";
+            }
+
+            printTask += "</table>";
+
+            var Rowutm = listBuff[2].split('][');
+            for(var iii=0; iii < Rowutm.length; iii++){
+                //var bCdata = Rowtasks.split
+                var utms = Rowutm[iii].split('$$,');
+                printUtm += "<tr>";
+                for(var xx=0; xx < utms.length; xx++){
+                    if(utms[xx].length > 80){
+                        utms[xx] = utms[xx].replace(/</g,'&lt');
+                        utms[xx] = utms[xx].replace(/</g,'&lt');
+                        utms[xx] = utms[xx].replace(']','');
+                        printUtm += "<td onclick=\"document.getElementById('idu"+iii+"').style.display='block'\">" + utms[xx].substr(0,80) +
+                            //"<span style=\"display:none\" id=\"fullvalueTask"+x+"\">" + tasks[x] + "</span>"+
+                            "...</td>";
+                        printUtm += "  <div  id='idu"+iii + "' class=\"w3-modal\" style = \"z-index: 999\">\n" +
+                            "    <div class=\"w3-modal-content\">\n" +
+                            "      <div class=\"w3-container\">\n" +
+                            "        <span onclick=\"document.getElementById('idu"+iii+"').style.display='none'\" class=\"w3-button w3-display-topright\">&times;</span>\n" +
+                            "        <p>"+utms[xx]+"</p>\n" +
+                            "      </div>\n" +
+                            "    </div>\n" +
+                            "  </div>";
+                    }else{
+                        printUtm += "<td>" + utms[xx].replace('$$','') +"</td>";
+                    }
+
+                }
+                printUtm += "</tr>";
+            }
+
+            printUtm += "</table>";
+
+
+
+
+
+
+
+
+
+
+
+
+            printTable +="</table><br>";
+            printTable +="<button onclick=\"myFunction2('Demo3')\" class=\"w3-btn w3-block w3-red\">"+
+                "Ошибка в буфере</button>" +
+                "<div id=\"Demo3\" class=\"w3-hide w3-card w3-padding-16\" style = \"height: 100px\">" +
+                "<p id=\"textOfError\">" + errorOfGod + "</p>" +
+                "</div>";
+
+            printTable +="<button onclick=\"myFunction2('Demo4')\" class=\"w3-btn w3-block w3-green\">"+
+                "Таски</button>" +
+
+                "<div id=\"Demo4\" class=\"w3-hide w3-card w3-padding-16\" style = \"overflow-x:scroll\">" +
+                "<p id=\"tableOfTasks\">" + printTask + "</p>" +
+                "</div>";
+
+            printTable +="<button onclick=\"myFunction2('Demo2')\" class=\"w3-btn w3-block w3-green\">"+
+                "Тикеты из УТМ</button>" +
+
+                "<div id=\"Demo2\" class=\"w3-hide w3-card w3-padding-16\" style = \"overflow-x:scroll\">" +
+                "<p id=\"tableOfTickets\">" + printUtm + "</p>" +
+                "</div>";
+
+
+
+            GodOutput.innerHTML = printTable;
+
+            //printTaleInfo += "</tr></table>";
+
+            //outputText.innerHTML = printTaleInfo;
+
+            //outputText.innerHTML += printTableInfo2;
+            //----endcp
+        }
+    }
+
+
+    var body = 'GodBuf=' + Godbuff+
+        '&GodSap='+ GodSAP;
+
+    xhrB.open('POST', '/test/togod', true);
+    xhrB.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+    xhrB.send(body);
+
+}
+
+function myFunction2(id) {
+    var x = document.getElementById(id);
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else {
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+
 
 function out31() {
 
@@ -346,7 +580,7 @@ function out31() {
 
 
 
-    xhrB.open('POST', '/bcm2web', true);
+    xhrB.open('POST', '/test/', true);
     xhrB.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
     xhrB.send(body);
 
@@ -412,7 +646,7 @@ function confimSendOut31() {
     //    '!buff#afterEdit'+
     //    '!selfBuf#'+outputText+
     //    '!SAP#'+inSap;
-    xhrConfirm.open('POST', '/bcm2web/csend', true);
+    xhrConfirm.open('POST', '/test/csend', true);
     xhrConfirm.setRequestHeader('Content-Type', 'application/raw')
     xhrConfirm.send(body);
 }
@@ -471,7 +705,7 @@ function confirmAfterEdit() {
         '!buff#afterEdit'+
         '!selfBuf#'+outputBuf+
         '!SAP#'+inSap;
-    xhrConfirm.open('POST', '/bcm2web/csend', true);
+    xhrConfirm.open('POST', '/test/csend', true);
     xhrConfirm.setRequestHeader('Content-Type', 'application/raw')
     xhrConfirm.setRequestHeader('charset', 'UTF-8')
     xhrConfirm.send(body);
@@ -498,7 +732,7 @@ function massConfirm() {
         '&type=out31'+
         '&buff=all'+
         '&SAP='+inSap;
-    xhrConfirm.open('POST', '/bcm2web/csend', true);
+    xhrConfirm.open('POST', '/test/csend', true);
     xhrConfirm.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
     xhrConfirm.send(body);
 }
@@ -780,7 +1014,7 @@ function in24() {
 
 
 
-    xhrB.open('POST', '/bcm2web', true);
+    xhrB.open('POST', '/test/', true);
     xhrB.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
     xhrB.send(body);
 
@@ -849,7 +1083,7 @@ function confimSendIn24() {
     //    '!buff#afterEdit'+
     //    '!selfBuf#'+outputText+
     //    '!SAP#'+inSap;
-    xhrConfirm.open('POST', '/bcm2web/csend', true);
+    xhrConfirm.open('POST', '/test/csend', true);
     xhrConfirm.setRequestHeader('Content-Type', 'application/raw')
     xhrConfirm.send(body);
 }
@@ -907,7 +1141,7 @@ function confirm24AfterEdit() {
         '!buff#afterEdit'+
         '!selfBuf#'+outputBuf+
         '!SAP#'+inSap;
-    xhrConfirm.open('POST', '/bcm2web/csend', true);
+    xhrConfirm.open('POST', '/test/csend', true);
     xhrConfirm.setRequestHeader('Content-Type', 'application/raw')
     xhrConfirm.setRequestHeader('charset', 'UTF-8')
     xhrConfirm.send(body);
@@ -980,7 +1214,7 @@ function loadUserParams() {
     var body = 'confirmSend#yes!';
 
 
-    xhrConfirm.open('POST', '/bcm2web/profile', true);
+    xhrConfirm.open('POST', '/test/profile', true);
     xhrConfirm.setRequestHeader('Content-Type', 'application/raw')
     xhrConfirm.setRequestHeader('charset', 'UTF-8')
     xhrConfirm.send(body);
@@ -1080,7 +1314,7 @@ function changeUserParam(paramKey) {
                 }
             }
             var body = 'queryTableAuto#yes!';
-            xhrConfirm.open('POST', '/bcm2web/profile', true);
+            xhrConfirm.open('POST', '/test/profile', true);
             xhrConfirm.setRequestHeader('Content-Type', 'application/raw')
             xhrConfirm.setRequestHeader('charset', 'UTF-8')
             xhrConfirm.send(body);
@@ -1118,7 +1352,7 @@ function confirmChangeParam(nameParam) {
 
     }
     var body = 'changeParam#yes!'+nameParam + "#" + valueParam;
-    xhrConfirm.open('POST', '/bcm2web/profile', true);
+    xhrConfirm.open('POST', '/test/profile', true);
     xhrConfirm.setRequestHeader('Content-Type', 'application/raw')
     xhrConfirm.setRequestHeader('charset', 'UTF-8')
     xhrConfirm.send(body);
@@ -1193,7 +1427,7 @@ function viewLogs() {
 
     var body = 'reqData#yes!'+inputUser;
 
-    xhrConfirm.open('POST', '/bcm2web/profile', true);
+    xhrConfirm.open('POST', '/test/profile', true);
     xhrConfirm.setRequestHeader('Content-Type', 'application/raw')
     xhrConfirm.setRequestHeader('charset', 'UTF-8')
     xhrConfirm.send(body);
@@ -1221,7 +1455,7 @@ function reqUsers() {
     var body = 'reqUsers#yes!';
 
 
-    xhrConfirm.open('POST', '/bcm2web/profile', true);
+    xhrConfirm.open('POST', '/test/profile', true);
     xhrConfirm.setRequestHeader('Content-Type', 'application/raw')
     xhrConfirm.setRequestHeader('charset', 'UTF-8')
     xhrConfirm.send(body);
@@ -1272,7 +1506,7 @@ function showTempTable() {
         // '&SAP='+inSap+
         '&checked=true';
 
-    xhr.open('POST', '/bcm2web', true);
+    xhr.open('POST', '/test/', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
     xhr.setRequestHeader('charset', 'UTF-8')
     xhr.send(body);
@@ -1309,7 +1543,7 @@ function trunAutoGas() {
         // '&SAP='+inSap+
         '&checked=true';
 
-    xhr.open('POST', '/bcm2web', true);
+    xhr.open('POST', '/test/', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
     xhr.setRequestHeader('charset', 'UTF-8')
     xhr.send(body);
@@ -1406,7 +1640,7 @@ function sendSerts() {
 
     }
     var body = 'listOfCerts#'+ listOfCerts.replace(/\s/g,"!");
-    xhr.open('POST', '/bcm2web/certs', true);
+    xhr.open('POST', '/test/certs', true);
     xhr.setRequestHeader('Content-Type', 'application/raw')
     xhr.setRequestHeader('charset', 'UTF-8')
     xhr.send(body);
@@ -1415,11 +1649,116 @@ function sendSerts() {
 }
 var certsToChgOrUpd=0;
 function sendSerts2() {
+    //sec
+    var base = 60;
+    var clocktimer, dateObj, dh, dm, ds, ms;
+    var readout = '';
+    var h = 1,
+        m = 1,
+        tm = 1,
+        s = 0,
+        ts = 0,
+        ms = 0,
+        init = 0;
+    //функция для очистки поля
+    function ClearСlock() {
+        clearTimeout(clocktimer);
+        h = 1;
+        m = 1;
+        tm = 1;
+        s = 0;
+        ts = 0;
+        ms = 0;
+        init = 0;
+        readout = '00:00:00';
+        document.getElementsByName("stopwatch").value = readout;
+    }
+
+
+//Функция запуска и остановки
+    function StartStop() {
+        if (init == 0) {
+            ClearСlock();
+            dateObj = new Date();
+            StartTIME();
+            init = 1;
+        } else {
+            clearTimeout(clocktimer);
+            init = 0;
+        }
+    }
+
+    //функция для старта секундомера
+    function StartTIME() {
+        var cdateObj = new Date();
+        var t = (cdateObj.getTime() - dateObj.getTime()) - (s * 1000);
+        if (t > 999) {
+            s++;
+        }
+        if (s >= (m * base)) {
+            ts = 0;
+            m++;
+        } else {
+            ts = parseInt((ms / 100) + s);
+            if (ts >= base) {
+                ts = ts - ((m - 1) * base);
+            }
+        }
+        if (m > (h * base)) {
+            tm = 1;
+            h++;
+        } else {
+            tm = parseInt((ms / 100) + m);
+            if (tm >= base) {
+                tm = tm - ((h - 1) * base);
+            }
+        }
+        ms = Math.round(t / 10);
+        if (ms > 99) {
+            ms = 0;
+        }
+        if (ms == 0) {
+            ms = '00';
+        }
+        if (ms > 0 && ms <= 9) {
+            ms = '0' + ms;
+        }
+        if (ts > 0) {
+            ds = ts;
+            if (ts < 10) {
+                ds = '0' + ts;
+            }
+        } else {
+            ds = '00';
+        }
+        dm = tm - 1;
+        if (dm > 0) {
+            if (dm < 10) {
+                dm = '0' + dm;
+            }
+        } else {
+            dm = '00';
+        }
+        dh = h - 1;
+        if (dh > 0) {
+            if (dh < 10) {
+                dh = '0' + dh;
+            }
+        } else {
+            dh = '00';
+        }
+        readout = dh + ':' + dm + ':' + ds;
+        document.getElementsByName("stopwatch").value  = readout;
+        clocktimer = setTimeout(StartTIME, 1);
+    }
+
+
     var certsToChgOrUpd=0;
     let xhr = new XMLHttpRequest();
     document.getElementById('InsCertTableAuto').disabled=true;
     var listOfCerts = document.getElementById("usercerts").innerText;
     //listOfCerts = listOfCerts.replace(/\s/g,"")
+    //StartStop();
     xhr.onreadystatechange = function() {
 
         if (xhr.readyState !== 4) return;
@@ -1427,14 +1766,17 @@ function sendSerts2() {
             //document.getElementById('InsCertTableAuto').disabled=false;
             var responseConfirm = xhr.responseText;
             sendSerts3(responseConfirm);
+            //StartStop();
             document.getElementById('InsCertTableAuto').disabled=false;
         }
         //alert("done");
+        document.getElementById('InsCertTableAuto').disabled=false;
+
         return;
 
     }
     var body = 'listOfCerts#'+ listOfCerts.replace(/\s/g,"!");
-    xhr.open('POST', '/bcm2web/certs', true);
+    xhr.open('POST', '/test/certs', true);
     xhr.setRequestHeader('Content-Type', 'application/raw')
     xhr.setRequestHeader('charset', 'UTF-8')
     xhr.send(body);
@@ -1476,6 +1818,7 @@ function sendSerts3(certsUp) {
     var timeSend = 6000
 
 
+
     if(countCerts > 999){
         var countsTh = Math.floor(countCerts / 999);
         for(t=0; t < countsTh; t++ ){
@@ -1513,7 +1856,7 @@ function sendSerts3(certsUp) {
                 for (iii=countsTens*10; iii < (countsTens*10)+countsOst;iii++){
                     certsToUp += listOfCerts[iii] + "_";
                 }
-                sendToUpdate(certsToUp,perCent);
+                sendToUpdate(certsToUp,100);
                 certsToUp="";
             }
 
@@ -1524,7 +1867,7 @@ function sendSerts3(certsUp) {
         for (l=0; l < listOfCerts.length-1 ;l++){
             certsToUp += listOfCerts[l] + "_";
         }
-        sendToUpdate(certsToUp,perCent);
+        sendToUpdate(certsToUp,100);
 
         document.getElementById('InsCertTableAuto').disabled=false;
     }
@@ -1573,7 +1916,7 @@ function sendToUpdate(upCerts,perc) {
     //alert(listOfCerts);
 
     var body = 'listOfCertsToUpdate#'+ upCerts;
-    xhr.open('POST', '/bcm2web/certs', true);
+    xhr.open('POST', '/test/certs', true);
     xhr.setRequestHeader('Content-Type', 'application/raw')
     xhr.setRequestHeader('charset', 'UTF-8')
     xhr.send(body);
@@ -1649,7 +1992,7 @@ function showTableAutoGas() {
         // '&SAP='+inSap+
         '&checked=true';
 
-    xhr.open('POST', '/bcm2web', true);
+    xhr.open('POST', '/test/', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
     xhr.setRequestHeader('charset', 'UTF-8')
     xhr.send(body);
@@ -1688,7 +2031,7 @@ function insMainAutoGas() {
         // '&SAP='+inSap+
         '&checked=true';
 
-    xhr.open('POST', '/bcm2web', true);
+    xhr.open('POST', '/test/', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
     xhr.setRequestHeader('charset', 'UTF-8')
     xhr.send(body);
@@ -1850,7 +2193,7 @@ function actionBuf() {
 
 
 
-    xhrConfirm.open('POST', '/bcm2web', true);
+    xhrConfirm.open('POST', '/test/', true);
     xhrConfirm.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
     xhrConfirm.send(body);
 
@@ -1939,7 +2282,7 @@ function fLowSearch() {
         '&checked=true';
 
 
-    xhrConfirm.open('POST', '/bcm2web', true);
+    xhrConfirm.open('POST', '/test/', true);
     xhrConfirm.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
     xhrConfirm.send(body);
 
@@ -2045,7 +2388,7 @@ function CheckCis() {
         '&checked=true';
 
 
-    xhrConfirm.open('POST', '/bcm2web', true);
+    xhrConfirm.open('POST', '/test/', true);
     xhrConfirm.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
     xhrConfirm.send(body);
 
@@ -2121,7 +2464,7 @@ function inform() {
         '&SAP='+sap+
         '&checked=true';
 
-    xhrB.open('POST', '/bcm2web', true);
+    xhrB.open('POST', '/test/', true);
     xhrB.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
     xhrB.send(body);
 
@@ -2131,6 +2474,12 @@ function inform() {
 function openCity(cityName) {
     var i;
     var x = document.getElementsByClassName("city");
+    var xx = document.getElementsByClassName("SystemAction");
+
+    for (i = 0; i < x.length; i++) {
+        xx[i].style.display = "none";
+    }
+
     for (i = 0; i < x.length; i++) {
         x[i].style.display = "none";
     }
@@ -2138,9 +2487,13 @@ function openCity(cityName) {
 }
 
 function cityOpen(evt, cityName) {
-
-    alert("2142");
     var i, x, tablinks;
+    var xxxx = document.getElementsByClassName("SystemAction");
+
+    for (i = 0; i < x.length; i++) {
+        xxxx[i].style.display = "none";
+    }
+
     x = document.getElementsByClassName("cityM");
     for (i = 0; i < x.length; i++) {
         x[i].style.display = "none";
@@ -2178,7 +2531,15 @@ function showUserTable() {
 function openSystem(SysstemName) {
     var i;
     var i;
+
+    var n = document.getElementsByName("mainIfo");
     var x = document.getElementsByClassName("SystemAction");
+    //n.style.display = "none";
+
+    for (ii = 0; ii < n.length; ii++) {
+        n[ii].style.display = "none";
+    }
+
     for (i = 0; i < x.length; i++) {
         x[i].style.display = "none";
     }
